@@ -9,4 +9,6 @@ AddCXXModule(
 	NAMESPACE Cango
 	LINKS
 		"Cango_CommonUtils_IntervalSleeper"
+		"Cango_CommonUtils_CounterX"
+		"Boost::system"
 )	
