@@ -74,9 +74,9 @@ namespace Cango :: inline TaskDesign {
 			auto [destination_user, destination_object] = Acquire(ItemDestination);
 			auto [monitor_user, monitor_object] = Acquire(Monitor);
 
-			TItem item{};
 			while (!monitor_object.IsDone()) {
 				Sleeper.Sleep();
+				TItem item{};
 				if (!source_object.GetItem(item)) monitor_object.HandleItemSourceError();
 				else {
 					destination_object.SetItem(item);
