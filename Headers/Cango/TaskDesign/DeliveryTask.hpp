@@ -20,6 +20,8 @@ namespace Cango :: inline TaskDesign {
 	};
 
 	struct EasyDeliveryTaskMonitor final {
+		static void EmptyHandler() noexcept;
+
 		std::function<void()> NormalHandler{};
 		std::function<void()> ExceptionHandler{};
 		std::atomic_bool Done{false};
