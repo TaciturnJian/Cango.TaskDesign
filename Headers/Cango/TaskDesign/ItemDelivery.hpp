@@ -41,12 +41,14 @@ namespace Cango :: inline TaskDesign {
 		[[nodiscard]] virtual bool GetItem(TItem& item) noexcept = 0;
 	};
 
-	/// @brief @c ItemSource 的概念
+	/// @brief 约束物品源
+	/// 要求 @c TObject 类型中提供物品类型 @c TObject::ItemType 和 @c TObject::GetItem 函数
 	template <typename TObject, typename TItem = typename TObject::ItemType>
 	concept IsItemSource = requires(TObject& node, TItem& item) {
 		{ node.GetItem(item) } -> std::convertible_to<bool>;
 	};
 
+	/// @brief 约束可判断是否能够工作的物品源
 	template <typename TObject>
 	concept IsFunctionalItemSource = IsItemSource<TObject> && IsFunctionalObject<TObject>;
 
