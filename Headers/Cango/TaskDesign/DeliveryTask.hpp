@@ -78,8 +78,7 @@ namespace Cango :: inline TaskDesign {
 
 			while (!monitor_object.IsDone()) {
 				Sleeper.Sleep();
-				TItem item{};
-				if (!source_object.GetItem(item)) monitor_object.HandleItemSourceError();
+				if (TItem item{}; !source_object.GetItem(item)) monitor_object.HandleItemSourceError();
 				else {
 					monitor_object.HandleItemSourceSuccess();
 					destination_object.SetItem(item);
