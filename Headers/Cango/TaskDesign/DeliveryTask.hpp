@@ -81,8 +81,8 @@ namespace Cango :: inline TaskDesign {
 				TItem item{};
 				if (!source_object.GetItem(item)) monitor_object.HandleItemSourceError();
 				else {
-					destination_object.SetItem(item);
 					monitor_object.HandleItemSourceSuccess();
+					destination_object.SetItem(item);
 				}
 			}
 		}
