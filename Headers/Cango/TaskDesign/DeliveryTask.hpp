@@ -4,7 +4,7 @@
 #include <Cango/CommonUtils/IntervalSleeper.hpp>
 
 #include "ItemDelivery.hpp"
-#include "ItemOwnership.hpp"
+#include "ObjectOwnership.hpp"
 #include "TaskExecution.hpp"
 
 namespace Cango :: inline TaskDesign {
@@ -43,7 +43,7 @@ namespace Cango :: inline TaskDesign {
 		IsItemSource TItemSource,
 		IsItemDestination TItemDestination,
 		IsDeliveryTaskMonitor TTaskMonitor,
-		std::default_initializable TItem = typename TItemSource::ItemType>
+		typename TItem = typename TItemSource::ItemType>
 		requires std::same_as<TItem, typename TItemDestination::ItemType>
 	class DeliveryTask final {
 		Credential<TItemSource> ItemSource{};
@@ -74,9 +74,17 @@ namespace Cango :: inline TaskDesign {
 		[[nodiscard]] bool IsFunctional() const noexcept { return ValidateAll(ItemSource, ItemDestination, Monitor); }
 
 		void Execute() noexcept {
-			auto [source_user, source_object] = Acquire(ItemSource);
-			auto [destination_user, destination_object] = Acquire(ItemDestination);
-			auto [monitor_user, monitor_object] = Acquire(Monitor);
+			ObjectUser<TItemSource> source_user;
+			if (!ItemSource.Acquire(source_user)) return;
+			auto& source_object = *source_user;
+
+			ObjectUser<TItemDestination> destination_user;
+			if (!ItemDestination.Acquire(destination_user)) return;
+			auto& destination_object = *destination_user;
+
+			ObjectUser<TTaskMonitor> monitor_user;
+			if (!Monitor.Acquire(monitor_user)) return;
+			auto& monitor_object = *monitor_user;
 
 			while (!monitor_object.IsDone()) {
 				Sleeper.Sleep();
