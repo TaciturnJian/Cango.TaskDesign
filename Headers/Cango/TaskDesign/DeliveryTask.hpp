@@ -25,7 +25,7 @@ namespace Cango :: inline TaskDesign {
 		std::function<void()> NormalHandler{};
 		std::function<void()> ExceptionHandler{};
 		std::atomic_bool Done{false};
-		Counter16 Counter{0, 5};
+		Counter16 Counter{0, 10};
 
 		[[nodiscard]] bool IsDone() const noexcept;
 		void Interrupt() noexcept;
@@ -76,13 +76,14 @@ namespace Cango :: inline TaskDesign {
 			auto [destination_user, destination_object] = Acquire(ItemDestination);
 			auto [monitor_user, monitor_object] = Acquire(Monitor);
 
+			TItem item{}; 
 			while (!monitor_object.IsDone()) {
 				Sleeper.Sleep();
-				if (TItem item{}; !source_object.GetItem(item)) monitor_object.HandleItemSourceError();
-				else {
+				if (source_object.GetItem(item)) {
 					monitor_object.HandleItemSourceSuccess();
 					destination_object.SetItem(item);
 				}
+				else monitor_object.HandleItemSourceError();
 			}
 		}
 	};

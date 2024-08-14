@@ -1,10 +1,10 @@
 #pragma once
 
 #include <concepts>
-#include <list>
-#include <vector>
-#include <thread>
 #include <functional>
+#include <list>
+#include <thread>
+#include <vector>
 
 namespace Cango :: inline TaskDesign {
 	template <typename TObject>
