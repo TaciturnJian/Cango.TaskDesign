@@ -19,6 +19,8 @@ namespace Cango :: inline TaskDesign {
 		{ monitor.HandleItemSourceSuccess() };
 	};
 
+	/// @brief 任务监视器的简单实现。
+	///	默认行为是连续异常后终止任务，有正常后重置连续计数器，当提供了 NormalHandler 和 ExceptionHandler 后，将替代默认行为 
 	struct EasyDeliveryTaskMonitor final {
 		static void EmptyHandler() noexcept;
 
