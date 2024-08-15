@@ -2,8 +2,6 @@
 
 #include <memory>
 #include <concepts>
-
-// ReSharper disable once CppUnusedIncludeDirective
 #include <ostream>
 
 namespace Cango :: inline TaskDesign
@@ -54,7 +52,7 @@ namespace Cango :: inline TaskDesign
 		Credential(const Credential& other) noexcept;
 
 		/// @brief 判断凭据是否有效
-		bool IsValid() const noexcept;
+		[[nodiscard]] bool IsValid() const noexcept;
 
 		/// @brief 从凭据获取使用权
 		bool Acquire(ObjectUser<T>& user) const noexcept;
@@ -82,7 +80,7 @@ namespace Cango :: inline TaskDesign
 		explicit ObjectUser(std::shared_ptr<T> other) noexcept;
 
 		/// @brief 判断此使用者是否有效
-		bool IsValid() const noexcept;
+		[[nodiscard]] bool IsValid() const noexcept;
 
 		/// @brief 为凭据赋予当前使用者的有效性
 		bool Authorize(Credential<T>& credential) const noexcept;
@@ -130,7 +128,7 @@ namespace Cango :: inline TaskDesign
 		ObjectUser<T> Use() const noexcept;
 
 		/// @brief 返回所有者是否有效
-		bool IsValid() const noexcept;
+		[[nodiscard]] bool IsValid() const noexcept;
 
 		/// @brief 认证凭据，当所有者有效时能保证执行后，参数中的凭据有效
 		bool Authorize(Credential<T>& credential) const noexcept;

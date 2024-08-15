@@ -86,7 +86,7 @@ namespace Cango :: inline TaskDesign {
 			if (!Monitor.Acquire(monitor_user)) return;
 			auto& monitor_object = *monitor_user;
 
-			TItem item{}; 
+			TItem item{};
 			while (!monitor_object.IsDone()) {
 				Sleeper.Sleep();
 				if (source_object.GetItem(item)) {
