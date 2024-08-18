@@ -15,4 +15,5 @@ AddCXXModule(
 	LINKS
 		"Cango_CommonUtils::CounterX"
 		"Cango_CommonUtils::IntervalSleeper"
+		"Cango_CommonUtils::ObjectOwnership"
 )	

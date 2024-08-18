@@ -24,7 +24,7 @@ namespace Cango :: inline TaskDesign {
 	/// @brief 代表可以被执行的任务
 	struct ExecutableTask {
 		/// @brief 检查是否可以执行任务
-		virtual bool IsExecutable() noexcept = 0;
+		virtual bool IsFunctional() noexcept = 0;
 
 		/// @brief 执行任务
 		virtual void Execute() noexcept = 0;
