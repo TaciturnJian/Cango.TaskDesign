@@ -2,9 +2,9 @@
 
 #include <Cango/CommonUtils/CounterX.hpp>
 #include <Cango/CommonUtils/IntervalSleeper.hpp>
+#include <Cango/CommonUtils/ObjectOwnership.hpp>
 
 #include "ItemDelivery.hpp"
-#include "ObjectOwnership.hpp"
 #include "TaskExecution.hpp"
 
 namespace Cango :: inline TaskDesign {
@@ -74,16 +74,15 @@ namespace Cango :: inline TaskDesign {
 		[[nodiscard]] bool IsFunctional() const noexcept { return ValidateAll(ItemSource, ItemDestination, Monitor); }
 
 		void Execute() noexcept {
-			ObjectUser<TItemSource> source_user;
-			if (!ItemSource.Acquire(source_user)) return;
+			ObjectUser<TItemSource> source_user = ItemSource.lock();
+			ObjectUser<TItemDestination> destination_user = ItemDestination.lock();
+			ObjectUser<TTaskMonitor> monitor_user = Monitor.lock();
+
+			// 检查指针状态
+			if (!source_user || !destination_user || !monitor_user) return;
+
 			auto& source_object = *source_user;
-
-			ObjectUser<TItemDestination> destination_user;
-			if (!ItemDestination.Acquire(destination_user)) return;
 			auto& destination_object = *destination_user;
-
-			ObjectUser<TTaskMonitor> monitor_user;
-			if (!Monitor.Acquire(monitor_user)) return;
 			auto& monitor_object = *monitor_user;
 
 			TItem item{};
