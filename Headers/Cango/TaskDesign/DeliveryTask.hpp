@@ -95,5 +95,9 @@ namespace Cango :: inline TaskDesign {
 				else monitor_object.HandleItemSourceError();
 			}
 		}
+
+		void operator()() noexcept {
+			Execute();
+		}
 	};
 }
