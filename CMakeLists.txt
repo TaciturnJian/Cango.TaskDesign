@@ -4,17 +4,14 @@ include(Cango)
 
 project("Cango.TaskDesign")
 
-set(RequiredLibraries
+set(required_libraries
 	"Cango::CommonUtils"
 )
-RequireLibraries(RequiredLibraries)
+RequireLibraries(required_libraries)
 
 AddCXXModule(
 	NAME TaskDesign
 	NAMESPACE Cango
 	LINKS
-		"Cango_CommonUtils::CounterX"
-		"Cango_CommonUtils::IntervalSleeper"
-		"Cango_CommonUtils::ObjectOwnership"
-		"Cango_CommonUtils::JoinThreads"
+		"Cango::CommonUtils"
 )	
