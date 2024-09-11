@@ -14,4 +14,5 @@ AddCXXModule(
 	NAMESPACE Cango
 	LINKS
 		"Cango::CommonUtils"
+		"matchit::matchit"
 )	

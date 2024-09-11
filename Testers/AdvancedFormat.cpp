@@ -4,28 +4,28 @@
 #include <iostream>
 #include <sstream>
 #include <string_view>
+#include <matchit.h>
 
-struct TestObject2 {
-	int V3;
-	float V2;
-	double V1;
-};
+constexpr auto constexpr_return(auto value) {
+	return [value] constexpr {return value;};
+}
 
-template <>
-struct std::formatter<TestObject2, char> {
-	constexpr auto parse(std::format_parse_context& context) {
-		const auto it = context.begin();
-		if (*it != '}') throw std::format_error("invalid format");
-		return it;
-	}
+constexpr std::int32_t factorial(std::int32_t n)
+{
+	using namespace matchit;
 
-	auto format(const TestObject2& obj, std::format_context& context) const {
-		return std::format_to(context.out(), "{} {} {}", obj.V1, obj.V2, obj.V3);
-	}
-};
+	if (n < 0) throw std::invalid_argument("n must be non-negative");
+
+	return match(n)(
+		pattern | 0 = constexpr_return(1),
+		pattern | 1 = constexpr_return(1),
+		pattern | 2 = constexpr_return(2),
+		pattern | _ = [n] { return n * factorial(n - 1); }
+	);
+}
 
 int main() {
-	TestObject2 object2{};
-	std::cout << std::format("{} {}\n", 1, object2);
+	std::cout << std::format("Factorial of 5 is {}\n", factorial(5));
+
 	return 0;
 }
