@@ -12,7 +12,10 @@ RequireLibraries(required_libraries)
 AddCXXModule(
 	NAME TaskDesign
 	NAMESPACE Cango
+	HEADER_DIR Headers
+	SOURCE_DIR Sources
+	TESTER_DIR Testers
 	LINKS
 		"Cango::CommonUtils"
-		"matchit::matchit"
+#		"matchit::matchit"
 )	
